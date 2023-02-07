@@ -29,6 +29,6 @@ export type RequestError = {
   message: string;
 };
 
-export type CreateBooking = {
+export type CreateOrUpdateBooking = {
   roomId: number;
 };

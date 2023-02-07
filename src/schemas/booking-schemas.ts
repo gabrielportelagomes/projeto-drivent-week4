@@ -1,6 +1,6 @@
-import { CreateBooking } from "@/protocols";
+import { CreateOrUpdateBooking } from "@/protocols";
 import Joi from "joi";
 
-export const createBookingSchema = Joi.object<CreateBooking>({
+export const createOrUpdateBookingSchema = Joi.object<CreateOrUpdateBooking>({
   roomId: Joi.number().integer().min(1).required(),
 });
