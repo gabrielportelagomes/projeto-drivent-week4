@@ -26,6 +26,10 @@ async function getBooking(userId: number) {
 async function postBooking(userId: number, roomId: number) {
   await verifyTicketAndEnrollment(userId);
 
+  const bookingExists = await bookingRepository.findBookingByUserId(userId);
+
+  if (bookingExists) throw forbiddenError();
+
   const room = await bookingRepository.findRoomByIdWithBookings(roomId);
 
   if (!room) throw notFoundError();
