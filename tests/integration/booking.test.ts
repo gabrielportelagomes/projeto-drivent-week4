@@ -305,17 +305,18 @@ describe("POST /booking", () => {
     });
 
     it("should respond with status 403 when given rommId has no capacity", async () => {
+      const bookingUser = await createUser();
       const user = await createUser();
       const token = await generateValidToken(user);
       const enrollment = await createEnrollmentWithAddress(user);
-      const ticketType = await createTicketTypeWithNoHotel();
+      const ticketType = await createTicketTypeWithHotel();
       const ticket = await createTicket(enrollment.id, ticketType.id, TicketStatus.PAID);
       const payment = await createPayment(ticket.id, ticketType.price);
       const hotel = await createHotel();
       const room = await createRoomWithHotelId(hotel.id);
-      await createBooking(user.id, room.id);
-      await createBooking(user.id, room.id);
-      await createBooking(user.id, room.id);
+      await createBooking(bookingUser.id, room.id);
+      await createBooking(bookingUser.id, room.id);
+      await createBooking(bookingUser.id, room.id);
       const body = { roomId: room.id };
 
       const response = await server.post("/booking").set("Authorization", `Bearer ${token}`).send(body);
